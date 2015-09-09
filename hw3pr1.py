@@ -158,14 +158,33 @@ def flipflop(filename):
 
 
 # Sound function to write #1:  reverse
-
-
-
-
-
-
+def reverse(filename):
+    #reverse plays the original sound backwards
+    print "reading in the sound data..."
+    samps, sr = readwav(filename)
+    print "computing the new sound..."
+    newsamps = []
+    lengthlist = map(lambda x:(-1*(x+1)),range(len(samps))) # list will read -1,-2...-n
+    print lengthlist[0:10]
+    for index in lengthlist:
+        newsamps.append(samps[index])
+    newsr = sr
+    writewav(newsamps, newsr, "out.wav")
 
 # Sound function to write #2:  volume
+def volume(filename,scale_factor):
+    print "reading in the sound data..."
+    samps, sr = readwav(filename)
+    print "computing the new sound..."
+    newsamps = scale(samps,scale_factor)
+    newsr = sr
+    writewav(newsamps, newsr, "out.wav")
+
+
+def reverse_and_volume(filename,scale_factor):
+    reverse(filename)
+    volume('out.wav', scale_factor)
+    play('out.wav')
 
 
 
@@ -227,6 +246,7 @@ def pure_tone(freq, time_in_seconds):
     writewav( samps, sr, "out.wav" )
     print "Playing new sound..."
     play( 'out.wav' )
+
 
 
 
